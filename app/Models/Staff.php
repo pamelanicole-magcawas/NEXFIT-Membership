@@ -5,22 +5,28 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Trainer extends Authenticatable
+class Staff extends Authenticatable
 {
     use Notifiable;
 
     /**
-     * Trainers are the only self-registering account type
-     * (see RegisterController) — staff/admin accounts stay
-     * predefined via StaffSeeder.
+     * Table + primary key match the studio's naming: staff_id, not id.
+     */
+    protected $table = 'staff';
+    protected $primaryKey = 'staff_id';
+
+    /**
+     * Predefined accounts only — no self-registration for staff/admin,
+     * so this stays deliberately small.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'full_name',
         'email',
-        'phone',
         'password',
+        'role',
+        'contact_info',
     ];
 
     /**
@@ -41,8 +47,8 @@ class Trainer extends Authenticatable
         ];
     }
 
-    public function members()
+    public function isAdmin(): bool
     {
-        return $this->hasMany(Member::class, 'assigned_trainer_id');
+        return $this->role === 'Admin';
     }
 }

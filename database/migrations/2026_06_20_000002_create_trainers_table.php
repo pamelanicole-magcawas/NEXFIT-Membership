@@ -9,10 +9,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Trainer assignment during enrollment
+        // Trainer assignment during enrollment, and trainer login accounts
+        // (trainers are the only self-registering account type — see
+        // RegisterController). email/password are nullable because the
+        // three sample trainers below are seeded as assignment-only
+        // records with no login access yet.
         Schema::create('trainers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('email')->nullable()->unique();
+            $table->string('phone', 20)->nullable();
+            $table->string('password')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
 

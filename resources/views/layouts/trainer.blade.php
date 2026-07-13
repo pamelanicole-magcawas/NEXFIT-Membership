@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'NexFit') &ndash; Fit Urban Staff Portal</title>
+    <title>@yield('title', 'NexFit') &ndash; Fit Urban Trainer Portal</title>
 
     {{-- Apply theme before paint to prevent flash --}}
     <script>
@@ -784,69 +784,42 @@
         </div>
         <div class="brand-info">
             <div class="brand-name">NEXFIT</div>
-            <div class="brand-sub">Fit Urban &middot; Staff Portal</div>
+            <div class="brand-sub">Fit Urban &middot; Trainer Portal</div>
         </div>
     </div>
 
     {{-- Nav --}}
     <nav class="sidebar-nav">
         <div class="nav-section-label">Main</div>
-        <a href="#" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
+        <a href="{{ route('trainer.home') }}" class="nav-link {{ request()->routeIs('trainer.home') ? 'active' : '' }}">
             <i class="bi bi-house-door"></i> Home
         </a>
-        <a href="#" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <a href="{{ route('trainer.dashboard') }}" class="nav-link {{ request()->routeIs('trainer.dashboard') ? 'active' : '' }}">
             <i class="bi bi-speedometer2"></i> Dashboard
         </a>
-
-        <div class="nav-section-label">My Work</div>
-        <a href="#" class="nav-link {{ request()->routeIs('scheduling*') ? 'active' : '' }}">
-            <i class="bi bi-calendar-check"></i> Scheduling
-        </a>
-        <a href="#" class="nav-link {{ request()->routeIs('session-management.*') ? 'active' : '' }}">
-            <i class="bi bi-calendar2-week"></i>
-            Session Management
-        </a>
-        <a href="#" class="nav-link {{ request()->routeIs('session-credit-inventory.*') ? 'active' : '' }}">
-                <i class="bi bi-box-seam"></i>
-                Session Credit Inventory
-            </a>
-        <a href="{{ route('members.index') }}" class="nav-link {{ request()->routeIs('members.*') ? 'active' : '' }}">
+        <a href="{{ route('trainer.members') }}" class="nav-link {{ request()->routeIs('trainer.members') ? 'active' : '' }}">
             <i class="bi bi-people"></i> Members
         </a>
-        <a href="#" class="nav-link {{ request()->routeIs('trainers*') ? 'active' : '' }}">
-            <i class="bi bi-person-badge"></i> Trainers
+        <a href="{{ route('trainer.schedule') }}" class="nav-link {{ request()->routeIs('trainer.schedule') ? 'active' : '' }}">
+            <i class="bi bi-calendar-check"></i> Schedule
         </a>
-        <a href="#" class="nav-link {{ request()->routeIs('ai-plans*') ? 'active' : '' }}">
-            <i class="bi bi-stars"></i> AI Plans
-            <span class="nav-badge">AI</span>
-        </a>
-
-        <div class="nav-section-label">Reports</div>
-        <a href="#" class="nav-link {{ request()->routeIs('reports*') ? 'active' : '' }}">
-            <i class="bi bi-bar-chart-line"></i> Reports
-        </a>
-
-        <div class="nav-section-label">Support</div>
-        <a href="#" class="nav-link {{ request()->routeIs('settings*') ? 'active' : '' }}">
-            <i class="bi bi-gear"></i> Settings
-        </a>
-        <a href="#" class="nav-link">
-            <i class="bi bi-question-circle"></i> Help
+        <a href="{{ route('trainer.training-plan') }}" class="nav-link {{ request()->routeIs('trainer.training-plan') ? 'active' : '' }}">
+            <i class="bi bi-clipboard2-pulse"></i> Training Plan
         </a>
     </nav>
 
     {{-- User footer: shows the actual signed-in account below the nav --}}
     @php
-        $account = auth('staff')->user();
+        $account = auth('trainer')->user();
         $initials = $account
-            ? collect(explode(' ', $account->full_name))->map(fn ($part) => strtoupper(substr($part, 0, 1)))->take(2)->join('')
+            ? collect(explode(' ', $account->name))->map(fn ($part) => strtoupper(substr($part, 0, 1)))->take(2)->join('')
             : '?';
     @endphp
     <div class="sidebar-footer">
         <div class="user-avatar">{{ $initials }}</div>
         <div class="user-info">
-            <div class="user-name">{{ $account->full_name ?? 'Unknown' }}</div>
-            <div class="user-role">{{ $account->role ?? '' }}</div>
+            <div class="user-name">{{ $account->name ?? 'Unknown' }}</div>
+            <div class="user-role">Trainer</div>
         </div>
         <form action="{{ route('logout') }}" method="POST" class="ms-auto">
             @csrf
@@ -863,7 +836,7 @@
         <div class="topbar-left">
             <a href="#">ACCOUNT</a>
             <span class="bc-sep"><i class="bi bi-chevron-right"></i></span>
-            <span class="bc-current">@yield('page-title', 'Members') &mdash; NexFit</span>
+            <span class="bc-current">@yield('page-title', 'Home') &mdash; NexFit</span>
         </div>
 
         {{-- Right: mode toggle + bell --}}
