@@ -4,7 +4,9 @@
 
 @section('title', 'Sign In')
 
-@section('visual-title', 'Welcome back to the studio.')
+@section('visual-title')
+Coffee's on.<br>Let's get the day moving.
+@endsection
 @section('visual-copy', 'Sign in to pick up right where you left off — schedules, credits, and training plans, all in sync.')
 
 @section('content')
@@ -14,15 +16,19 @@
     <p class="auth-sub">Choose your account type and sign in to continue.</p>
 
     {{-- Sliding segmented control: toggles which form is active and posts a role flag --}}
-    <div class="role-switch" id="roleSwitch" data-active="staff">
+    @php
+        $defaultRole = old('role', session('status') ? 'trainer' : 'staff');
+    @endphp
+
+    <div class="role-switch" id="roleSwitch" data-active="{{ $defaultRole }}">
         <div class="role-slider"></div>
-        <button type="button" class="active" data-role="staff">Staff</button>
-        <button type="button" data-role="trainer">Trainer</button>
+        <button type="button" class="{{ $defaultRole === 'staff' ? 'active' : '' }}" data-role="staff">Staff</button>
+        <button type="button" class="{{ $defaultRole === 'trainer' ? 'active' : '' }}" data-role="trainer">Trainer</button>
     </div>
 
     <form method="POST" action="{{ route('login') }}" id="loginForm" novalidate>
         @csrf
-        <input type="hidden" name="role" id="roleInput" value="staff">
+        <input type="hidden" name="role" id="roleInput" value="{{ $defaultRole }}">
 
         <div class="field">
             <label for="login">Email</label>
@@ -75,7 +81,7 @@
         <button type="submit" class="submit-btn">Sign In</button>
     </form>
 
-    <div id="trainerRegister" style="display: none;">
+    <div id="trainerRegister" style="display: {{ $defaultRole === 'trainer' ? 'block' : 'none' }};">
         <div class="auth-divider">NEW TO NEXFIT</div>
 
         <p class="switch-link">

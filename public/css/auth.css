@@ -94,8 +94,7 @@ a{ color:inherit; }
     radial-gradient(120% 130% at 12% -15%,
       rgba(255,197,138,.85) 0%,
       rgba(250,129,18,.96) 26%,
-      rgba(178,74,0,.98) 60%,
-      #2A1002 100%);
+      rgba(178,74,0,.98) 60%);
   isolation:isolate;
 }
 /* soft glow orbs */
@@ -250,7 +249,7 @@ a{ color:inherit; }
 }
 .auth-form-wrap{
   width:100%;
-  max-width:452px;
+  max-width:540px;
   background:var(--white);
   border:1px solid var(--border);
   border-radius:var(--radius-lg);
@@ -354,6 +353,10 @@ form{ display:flex; flex-direction:column; }
   background:var(--error-bg);
 }
 .input-wrap input.invalid:focus{ box-shadow:0 0 0 4px rgba(220,38,38,.14); }
+
+.input-wrap:has(.pw-toggle) input{
+  padding-right:44px;
+}
 
 .pw-toggle{
   position:absolute; right:6px; top:50%; transform:translateY(-50%);

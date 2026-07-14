@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Trainer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -36,16 +35,14 @@ class RegisterController extends Controller
             'consent'  => ['accepted'],
         ]);
 
-        $trainer = Trainer::create([
+        Trainer::create([
             'name'     => $validated['name'],
             'email'    => $validated['email'],
             'phone'    => $validated['phone'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        Auth::guard('trainer')->login($trainer);
-
-        return redirect()->route('trainer.dashboard')
-            ->with('status', 'Account created! Welcome to Fit Urban.');
+        return redirect()->route('login')
+            ->with('status', 'Account created! Please log in to continue.');
     }
 }

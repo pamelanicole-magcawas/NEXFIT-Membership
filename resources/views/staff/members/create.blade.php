@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.member')
 
 @section('title', 'Enroll Member')
 @section('page-title', 'Enroll New Member')

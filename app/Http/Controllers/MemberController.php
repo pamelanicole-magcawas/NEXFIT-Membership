@@ -74,7 +74,7 @@ class MemberController extends Controller
                   ]);
             })->count();
 
-        return view('members.index', compact(
+        return view('staff.members.index', compact(
             'members', 'activeCount', 'inactiveCount',
             'expiredCount', 'expiringTodayCount', 'expiringWeekCount'
         ));
@@ -83,7 +83,7 @@ class MemberController extends Controller
     public function create()
     {
         $trainers = \App\Models\Trainer::orderBy('name')->get();
-        return view('members.create', compact('trainers'));
+        return view('staff.members.create', compact('trainers'));
     }
 
     public const PACKAGE_DURATIONS = [
@@ -151,12 +151,12 @@ class MemberController extends Controller
     public function show(Member $member)
     {
         $member->load(['trainer', 'packages', 'healthFlags', 'parqResponses', 'activePackage']);
-        return view('members.show', compact('member'));
+        return view('staff.members.show', compact('member'));
     }
 
     public function edit(Member $member)
     {
-        return view('members.edit', compact('member'));
+        return view('staff.members.edit', compact('member'));
     }
 
     public function update(Request $request, Member $member)
@@ -220,7 +220,7 @@ class MemberController extends Controller
     public function renewForm(Member $member)
     {
         $member->load(['packages', 'activePackage']);
-        return view('members.renew', compact('member'));
+        return view('staff.members.renew', compact('member'));
     }
 
     /**

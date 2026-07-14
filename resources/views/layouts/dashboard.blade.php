@@ -794,12 +794,12 @@
         <a href="#" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
             <i class="bi bi-house-door"></i> Home
         </a>
-        <a href="#" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <i class="bi bi-speedometer2"></i> Dashboard
         </a>
 
         <div class="nav-section-label">My Work</div>
-        <a href="#" class="nav-link {{ request()->routeIs('scheduling*') ? 'active' : '' }}">
+        <a href="{{ route('scheduling.index') }}" class="nav-link {{ request()->routeIs('scheduling*') ? 'active' : '' }}">
             <i class="bi bi-calendar-check"></i> Scheduling
         </a>
         <a href="#" class="nav-link {{ request()->routeIs('session-management.*') ? 'active' : '' }}">

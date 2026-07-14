@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TrainerController;
+use App\Http\Controllers\SchedulingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -33,6 +34,11 @@ Route::middleware('auth:staff')->group(function () {
     // REQ-MM-RENEW: renewal flow
     Route::get('members/{member}/renew',  [MemberController::class, 'renewForm'])->name('members.renew');
     Route::post('members/{member}/renew', [MemberController::class, 'renew'])->name('members.renew.store');
+
+    // Scheduling — weekly trainer-session booking calendar
+    Route::get('scheduling', [SchedulingController::class, 'index'])->name('scheduling.index');
+    Route::post('scheduling', [SchedulingController::class, 'store'])->name('scheduling.store');
+    Route::delete('scheduling/{trainerSession}', [SchedulingController::class, 'destroy'])->name('scheduling.destroy');
 });
 
 Route::middleware('guest')->group(function () {
@@ -50,9 +56,7 @@ Route::post('/logout', [LoginController::class, 'destroy'])
 // Temporary placeholder routes so the Blade views' route() calls resolve.
 // Swap the closures for real controllers/views as you build these pages out.
 Route::get('/dashboard', function () {
-    // No standalone dashboard view has been built yet — the members list is
-    // the closest thing to a staff "home" page right now, so land there.
-    return redirect()->route('members.index');
+    return view('staff.index');
 })->middleware('auth:staff')->name('dashboard');
 
 Route::middleware('auth:trainer')->prefix('trainer')->name('trainer.')->group(function () {

@@ -33,17 +33,6 @@
                 <h1>@yield('visual-title', 'Every session, tracked. Every member, known.')</h1>
                 <p>@yield('visual-copy', 'Manage bookings, memberships, and AI-assisted training plans from one place.')</p>
 
-                <div class="visual-stat">
-                    <div>
-                        <div class="label"><span class="live"></span> Today&rsquo;s Sessions</div>
-                        <div class="value">5</div>
-                        <div class="sub">Jun 30, 2026 · Live updates</div>
-                    </div>
-                    <div class="avatars">
-                        <span>PM</span><span>MK</span><span>KR</span>
-                    </div>
-                </div>
-
                 <div class="visual-pulse">
                     <svg viewBox="0 0 400 40" preserveAspectRatio="none">
                         <path d="M0 20 H120 L140 20 L155 6 L170 34 L185 20 L200 20 H400"/>
@@ -58,18 +47,23 @@
         <main class="auth-main">
             <div class="auth-form-wrap">
 
-                @if (session('status'))
-                    <div class="auth-status">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-                        {{ session('status') }}
-                    </div>
-                @endif
-
                 @yield('content')
 
             </div>
         </main>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('status'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: @json(session('status')),
+                confirmButtonColor: '#FA8112',
+            });
+        </script>
+    @endif
 
     @stack('scripts')
 </body>

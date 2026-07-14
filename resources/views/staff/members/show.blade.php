@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.member')
 
 @section('title', $member->full_name)
 @section('page-title', $member->full_name)
